@@ -5,7 +5,7 @@ const authenticate=require('./authenticate');
 
 const router = express.Router();
 
-router.get('/',function(req,res,next){
+router.get('*',function(req,res,next){
     if(authenticate.validateUser(req)){
         console.log('User authenticated',req.path);
         next();
