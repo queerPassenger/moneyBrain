@@ -1,21 +1,24 @@
-const express = require("express");
-const app=express();
-const authenticate=require('./authenticate');
 
+const express = require('express');
+const bodyParser = require('body-parser');
+const newRecord=require('./src/services/newRecorder').utility;
 
-const router = express.Router();
+// create the server
+const app = express();
 
-router.get('*',function(req,res,next){
-    if(authenticate.validateUser(req)){
-        console.log('User authenticated',req.path);
-        next();
-    }        
-    else    
-        res.send('Unauthorized User');
-});
-router.get('/loaddata',function(req,res,next){
-    console.log('User authenticated in loaddata');
-    res.send('All is well')
-});
-app.use('/*',router);
-require('./enviroment')(app);
+// add & configure middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+// create the homepage route at '/'
+app.get('/', (req, res) => {
+  res.send(`You got home page!\n`)
+})
+app.post('/newrecord',(req,res)=>{
+  newRecord(req.body,(resp)=>{
+    res.send(resp);
+  })
+})
+app.listen(3000, () => {
+  console.log('Listening on localhost:3000')
+})
