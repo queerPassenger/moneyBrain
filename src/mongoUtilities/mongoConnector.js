@@ -3,7 +3,7 @@ let mongoCount=0;
 
 const createConnection=function(dbConnectionUrl,callback){
 	console.log('**Connection Establishment Begins**',++mongoCount);
-	mongoClient.connect(dbConnectionUrl,function(err,dbInstance){
+	mongoClient.connect(dbConnectionUrl, { useNewUrlParser: true },function(err,dbInstance){
 		if(err){
 			callback(err,dbInstance);
 		}

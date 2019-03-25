@@ -1,7 +1,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const newRecord=require('./src/services/newRecorder').utility;
+const insertTransaction=require('./src/services/insertTransaction').utility;
 
 // create the server
 const app = express();
@@ -14,8 +14,8 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
   res.send(`You got home page!\n`)
 })
-app.post('/newrecord',(req,res)=>{
-  newRecord(req.body,(resp)=>{
+app.post('/insertTransaction',(req,res)=>{
+  insertTransaction(req.body,(resp)=>{
     res.send(resp);
   })
 })
