@@ -2,7 +2,7 @@ const connectDB=require('../mongoUtilities/connectDB.js');
 const collectionExistCheck=require('../mongoUtilities/collectionExistCheck.js');
 const dbDetails=require('../mongoUtilities/dbDetails').get('pouch');
 
-class ServiceController{
+class TransactionController{
     constructor(props){
         this.dbClient;        
     }
@@ -37,14 +37,28 @@ class ServiceController{
                          
         })
     }
-    static getTransactionList(cb){
+    static getList(payload,cb){
         collectionExistCheck(this.dbClient.db(dbDetails.db_name),dbDetails.collection['transaction'],false,(resp)=>{
             if(!(resp.status)){
                 this.errorLogs(resp);
                 cb([])
             }
             else{
-                this.dbClient.db(dbDetails.db_name).collection(dbDetails.collection['transaction']).find().toArray((err, result)=>{
+                this.dbClient.db(dbDetails.db_name).collection(dbDetails.collection['transaction']).aggregate([
+                    { "$project": {
+                        "_id": 0,
+                        "key":"$_id",
+                        "timeStamp":"$timeStamp",
+                        "data":"$date",
+                        "type":"$type",
+                        "comment":"$comment",
+                        "amount":"$amount",
+                        "amountType":"$amountType",
+                        "remainder":"$remainder",
+                        "user":"$user",
+                        "userId":"$userId",
+                    }}
+                ]).toArray((err, result)=>{
                     if(err){
                         this.errorLogs(resp);
                         cb([]);
@@ -56,7 +70,7 @@ class ServiceController{
             }
         })
     }
-    static insertNewTransaction(data,cb){
+    static insertNewOne(data,cb){
         let obj={
            timeStamp:new Date().toString(),
            date:data.date,
@@ -88,4 +102,4 @@ class ServiceController{
     }
     
 }
-module.exports={ServiceController};
+module.exports={TransactionController};
