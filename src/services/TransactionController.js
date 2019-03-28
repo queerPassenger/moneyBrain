@@ -1,6 +1,6 @@
 const connectDB=require('../mongoUtilities/connectDB.js');
 const collectionExistCheck=require('../mongoUtilities/collectionExistCheck.js');
-const dbDetails=require('../mongoUtilities/dbDetails').get('pouch');
+const dbDetails=require('../mongoUtilities/dbDetails').getDbData('pouch');
 
 class TransactionController{
     constructor(props){
@@ -38,13 +38,13 @@ class TransactionController{
         })
     }
     static getList(payload,cb){
-        collectionExistCheck(this.dbClient.db(dbDetails.db_name),dbDetails.collection['transaction'],false,(resp)=>{
+        collectionExistCheck(this.dbClient.db(dbDetails.db_name),dbDetails.collection['transaction'].collectionName,false,(resp)=>{
             if(!(resp.status)){
                 this.errorLogs(resp);
                 cb([])
             }
             else{
-                this.dbClient.db(dbDetails.db_name).collection(dbDetails.collection['transaction']).aggregate([
+                this.dbClient.db(dbDetails.db_name).collection(dbDetails.collection['transaction'].collectionName).aggregate([
                     { "$project": {
                         "_id": 0,
                         "key":"$_id",
@@ -81,7 +81,7 @@ class TransactionController{
            remainder:data.remaider,
            userId:data.userId
         }
-        this.dbClient.db(dbDetails.db_name).collection(dbDetails.collection['transaction']).insertOne(obj,(err,result)=>{
+        this.dbClient.db(dbDetails.db_name).collection(dbDetails.collection['transaction'].collectionName).insertOne(obj,(err,result)=>{
             if(err){
                 this.errorLogs(err);
                 cb({
