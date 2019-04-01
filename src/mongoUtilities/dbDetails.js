@@ -3,13 +3,14 @@ const dbCollectionSet=[
     {
         db:'pouch',
         collectionList:[
-            'user',
-            'transaction',
             'transactionType',
             'amountType',
-            'flagId',
+            'flag',
+            'user',
+            'transaction',           
             'errorLogs'
-        ]
+        ],
+        dataTypeSkeleton:['dataType_object','dataType_array','dataType_string','dataType_number','dataType_date','dataType_ObjectId']
     }
 ]
 function getDbData(key) {
@@ -22,15 +23,14 @@ function getDbData(key) {
                 username: 'dbUser',
                 password: 'dbUser123',
             }
-        default:
+        case 'local':
             return {
                 db_address: 'localhost',
                 port_no: null,
                 db_name: '',
-                collection: {
-
-                }
             }
+        default :
+            return null
     }
 }
 
@@ -39,7 +39,7 @@ function skeletonSchema(db, collection) {
         switch (collection) {
             case 'user':
                 return {
-                    collectionName: 'userTable',
+                    collectionName: 'user',
                     skeletonSchema: {
                         userId: 'dataType_ObjectId',
                         userName: 'dataType_string',
@@ -88,9 +88,9 @@ function skeletonSchema(db, collection) {
                         misc: 'dataType_array'
                     }
                 };
-            case 'flagId':
+            case 'flag':
                 return {
-                    collectionName: 'flagId',
+                    collectionName: 'flag',
                     skeletonSchema: {
                         flagId: 'dataType_ObjectId',
                         flagName: 'dataType_string',
@@ -118,4 +118,20 @@ function skeletonSchema(db, collection) {
         }
     }
 }
-module.exports = {dbCollectionSet,getDbData,skeletonSchema}
+function dummyEquivalent(type){
+    switch(type){
+        case 'dataType_object':
+            return '{}';
+        case 'dataType_array':
+            return '[]';
+        case 'dataType_string':
+            return '';
+        case 'dataType_number':
+            return -1;
+        case 'dataType_date':
+            return null;
+        case 'dataType_ObjectId':
+            return 'dummy';
+    }
+}
+module.exports = {dbCollectionSet,getDbData,skeletonSchema,dummyEquivalent}

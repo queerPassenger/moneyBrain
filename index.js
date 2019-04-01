@@ -1,9 +1,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const TransactionUtility=require('./src/services/TransactionUtility');
-const TransactionController=require('./src/services/TransactionController').TransactionController;
-//Initiate Connection to MongoDB
+const {dbTask}=require('./src/services/dbTask');
 
 
 // create the server
@@ -16,25 +14,16 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
   res.send(`You got home page!\n`)
 });
-app.post('/insertNewTransaction',(req,res)=>{
-  TransactionUtility.insertNewOne(req.body,(resp)=>{   
-    res.send(resp);
+
+function enableAppToListen(){
+  app.listen(3000, () => {
+    console.log('Listening on localhost:3000')
   })
-});
-app.get('/getTransactionList',(req,res)=>{
-  TransactionUtility.getList(req.body,(resp)=>{   
-    res.send(resp);
-  })
+}
+dbTask.preRunnerInsert()
+.then(()=>{
+  enableAppToListen();
 })
-
-
-TransactionController.connect((resp)=>{
-  if(resp.status){
-    console.log(resp.message);
-    app.listen(3000, () => {
-      console.log('Listening on localhost:3000')
-    })
-  }
-  else
-    console.error(resp.message);
-});
+.catch((err)=>{
+  throw err;
+})
