@@ -42,12 +42,15 @@ function skeletonSchema(db, collection) {
                     collectionName: 'user',
                     skeletonSchema: {
                         userId: 'dataType_ObjectId',
+                        loginId:'dataType_string',
+                        loginType:'dataType_string',
                         userName: 'dataType_string',
                         userEmail: 'dataType_string',
                         userInfo: {
                             age: 'dataType_number',
                             gender: 'dataType_string',
-                            status: 'dataType_string'
+                            status: 'dataType_string',
+                            photo:'dataType_string'
                         },
                         misc: 'dataType_array'
                     }
@@ -131,7 +134,7 @@ function dummyEquivalent(type){
         case 'dataType_date':
             return null;
         case 'dataType_ObjectId':
-            return 'dummy';
+            return '';
     }
 }
 module.exports = {dbCollectionSet,getDbData,skeletonSchema,dummyEquivalent}
