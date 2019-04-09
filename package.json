@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dbjobs":"node src/dbJobs"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "mongodb": "^3.1.13",
+    "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
     "opn": "^5.5.0",
     "passport": "^0.4.0",

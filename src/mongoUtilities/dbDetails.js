@@ -88,6 +88,7 @@ function skeletonSchema(db, collection) {
                         amountTypeId: 'dataType_ObjectId',
                         amountTypeNameAbbreviation: 'dataType_string',
                         amountTypeName: 'dataType_string',
+                        amountSymbol:'dataType_string',
                         misc: 'dataType_array'
                     }
                 };

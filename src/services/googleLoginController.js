@@ -1,7 +1,8 @@
-const {getDbData,dbCollectionSet} = require('../mongoUtilities/dbDetails');
+const {getDbData,dbCollectionSet,skeletonSchema, dummyEquivalent} = require('../mongoUtilities/dbDetails');
 const dbConnect = require('./dbConnectService');
 const { errorConstants } = require('../constants');
-const dbName=dbCollectionSet[0].db;
+const dbCollectionData=dbCollectionSet[0];
+const dbName=dbCollectionData.db;
 const dbDetailsToConnect = getDbData(dbName);
 
 class GoogleLoginController{    
@@ -10,16 +11,25 @@ class GoogleLoginController{
      * @return {Promise}
      */
     static checkUserExist(profile){
-        return new Promise((resolve,reject)=>{
-           
+        return new Promise((resolve,reject)=>{           
             dbConnect(dbDetailsToConnect, (dbClient) => {
                 dbClient.db(dbDetailsToConnect.db_name).collection('user').findOne({loginId:profile.id},{projection:{userId:1,_id:0}},(err, result)=>{
                    if(err){
                         reject(errorConstants.findUserFailedMsg);
                     }
                     else{
-                        return GoogleLoginController.createNewUser(profile);
-                        resolve(result);
+                        if(result===null){
+                            const createNewUserHandler=GoogleLoginController.createNewUser(profile); 
+                            createNewUserHandler
+                            .then((status)=>{
+                                resolve(status);
+                            })
+                            .catch((err)=>{
+                                reject(err)
+                            })
+                        }
+                        else
+                            resolve('User already exists');
                     }
                 })
             })
@@ -37,8 +47,23 @@ class GoogleLoginController{
                 userSchema.loginType=profile.provider;
                 userSchema.loginId=profile.id;
                 userSchema.userName=profile.displayName;
-                
-
+                userSchema.userInfo.photo=profile.photos[0].value;
+                dbConnect(dbDetailsToConnect, (dbClient) => {
+                    dbClient.db(dbDetailsToConnect.db_name).collection('user').updateOne(
+                        { loginId:  userSchema.loginId},
+                        {$set:userSchema},
+                        { upsert: true },
+                        (err,result)=>{
+                            if(err){
+                                console.log(err);
+                                reject(errorConstants.createNewUserFailedMsg)
+                            }
+                            else{
+                                resolve('User registered successfully');
+                            }
+                        }
+                    )
+                })
             }
             else{
                 reject(errorConstants.createNewUserFailedMsg)

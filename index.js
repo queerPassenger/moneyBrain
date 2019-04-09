@@ -30,7 +30,7 @@ function enableAppToListen(){
     console.log('Listening on localhost:3000')
   })
 }
-DbTask.preRunnerInsert(true,true)
+DbTask.preRunnerInsert(true,false)
 .then(()=>{
   enableAppToListen();
 })
