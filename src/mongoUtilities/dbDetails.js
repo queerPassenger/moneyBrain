@@ -75,8 +75,9 @@ function skeletonSchema(db, collection) {
                 return {
                     collectionName: 'transactionType',
                     skeletonSchema: {
-                        transactionTypeId: 'dataType_ObjectId',
+                        transactionTypeId: 'dataType_number',
                         transactionTypeName: 'dataType_string',
+                        transactionClassification:'dataType_string',
                         misc: 'dataType_array'
                     }
                 };
@@ -85,7 +86,7 @@ function skeletonSchema(db, collection) {
                 return {
                     collectionName: 'amountType',
                     skeletonSchema: {
-                        amountTypeId: 'dataType_ObjectId',
+                        amountTypeId: 'dataType_number',
                         amountTypeNameAbbreviation: 'dataType_string',
                         amountTypeName: 'dataType_string',
                         amountSymbol:'dataType_string',

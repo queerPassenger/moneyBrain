@@ -1,0 +1,86 @@
+[
+    {
+        "transactionTypeId":1,
+        "transactionTypeName": "travel",    
+        "transactionClassification":"expense",
+        "misc": [{"from":""},{"to":""}]
+    },
+    {
+        "transactionTypeId":2,
+        "transactionTypeName": "food",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":3,
+        "transactionTypeName": "accomodation",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":4,
+        "transactionTypeName": "grocery",
+        "transactionClassification":"expense",
+        "misc":[{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":5,
+        "transactionTypeName": "charity",
+        "transactionClassification":"expense",
+        "misc":[{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":6,
+        "transactionTypeName": "movie",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":7,
+        "transactionTypeName": "book",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":8,
+        "transactionTypeName": "clothing",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":9,
+        "transactionTypeName": "repair",
+        "transactionClassification":"expense",
+        "misc": [{"of":""},{"peopleInvolved":[]}]
+    },  
+    {
+        "transactionTypeId":10,
+        "transactionTypeName": "lending",
+        "transactionClassification":"expense",
+        "misc": [{"purpose":""},{"peopleInvolved":[]},{"remainder":""}]
+    },
+    {
+        "transactionTypeId":11,
+        "transactionTypeName": "borrow",
+        "transactionClassification":"expense",
+        "misc": [{"purpose":""},{"peopleInvolved":[]},{"remainder":""}]
+    },
+    {
+        "transactionTypeId":12,
+        "transactionTypeName": "BAnk R.D",
+        "transactionClassification":"saving",
+        "misc": [{"org":"","paymentTenure":""}]
+    },
+    {
+        "transactionTypeId":13,
+        "transactionTypeName": "BAnk F.D",
+        "transactionClassification":"saving",
+        "misc":[{"org":"","paymentTenure":""}]
+    },
+    {
+        "transactionTypeId":14,
+        "transactionTypeName": "Link",
+        "transactionClassification":"saving",
+        "misc":[{"org":"","paymentTenure":""}]
+    }
+]

@@ -15,7 +15,7 @@ const convertJSON=json=>{
         let objInp=json[key];
         output.push(
             {
-                amountTypeId:ind,
+                amountTypeId:(ind+1),
                 amountTypeNameAbbreviation:objInp.code,
                 amountTypeName:objInp.name,
                 amountSymbol:objInp.symbol,
@@ -26,27 +26,35 @@ const convertJSON=json=>{
     return output;
 }
 
-const amountTypeJobRunner = async url => {
+const amountTypeJobRunner = async () => {
   try {
     const response = await fetch(url);
     const json = await response.json();
-    let convertedJSON=convertJSON(json);
+    let dataToInsert=convertJSON(json);
     dbConnect(dbDetailsToConnect, (dbClient) => {
-        dbClient.db(dbDetailsToConnect.db_name).collection('amountType').insertMany(
-            convertedJSON,
-            (err,result)=>{
-                if(err){
-                    console.log('Error In Updating');
-                }
-                else{
-                    console.log('Done');
-                }
+        dbClient.db(dbDetailsToConnect.db_name).collection('amountType').drop((err,result)=>{
+            if(err){
+                console.log('Error In removing amountType - dbJobs',err);
             }
-        )
+            else{
+                dbClient.db(dbDetailsToConnect.db_name).collection('amountType').insertMany(
+                    dataToInsert,
+                    (err,result)=>{
+                        if(err){
+                            console.log('Error In inserting amountType - dbJobs');
+                        }
+                        else{
+                            console.log('Done  amountType - dbJobs');
+                        }
+                    }
+                )
+            }
+        })
+            
     });
         
   } catch (error) {
     console.log(error);
   }
 };
-amountTypeJobRunner(url);
+module.exports=amountTypeJobRunner;

@@ -10,7 +10,7 @@ class GoogleLoginController{
      * @param {Object} profile
      * @return {Promise}
      */
-    static checkUserExist(profile){
+    static checkUserExist(profile,createFlag){
         return new Promise((resolve,reject)=>{           
             dbConnect(dbDetailsToConnect, (dbClient) => {
                 dbClient.db(dbDetailsToConnect.db_name).collection('user').findOne({loginId:profile.id},{projection:{userId:1,_id:0}},(err, result)=>{
@@ -19,14 +19,19 @@ class GoogleLoginController{
                     }
                     else{
                         if(result===null){
-                            const createNewUserHandler=GoogleLoginController.createNewUser(profile); 
-                            createNewUserHandler
-                            .then((status)=>{
-                                resolve(status);
-                            })
-                            .catch((err)=>{
-                                reject(err)
-                            })
+                            if(createFlag){
+                                const createNewUserHandler=GoogleLoginController.createNewUser(profile); 
+                                createNewUserHandler
+                                .then((status)=>{
+                                    resolve(status);
+                                })
+                                .catch((err)=>{
+                                    reject(err)
+                                })
+                            }
+                            else{
+                                reject(errorConstants.userNotFoundMsg)
+                            }
                         }
                         else
                             resolve('User already exists');
@@ -55,7 +60,7 @@ class GoogleLoginController{
                         { upsert: true },
                         (err,result)=>{
                             if(err){
-                                console.log(err);
+                                console.log('Error is   ',err);
                                 reject(errorConstants.createNewUserFailedMsg)
                             }
                             else{
@@ -72,4 +77,4 @@ class GoogleLoginController{
         });
     }
 }
-module.exports = { GoogleLoginController };
+module.exports = GoogleLoginController;
