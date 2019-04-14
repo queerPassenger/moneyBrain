@@ -3,12 +3,12 @@ const GoogleLoginController=require('./src/services/googleLoginController');
 
 
 module.exports=(app)=>{
-    app.post('/createUser',(req,res)=>{
-        GoogleLoginController.checkUserExist(req.body,true)
-        .then((msg)=>{
+    app.post('/getUserId',(req,res)=>{
+        GoogleLoginController.getUserIdFromLoginId(req.body)
+        .then((userId)=>{
             res.send({
                 status:true,
-                userId:msg
+                msg:userId
             });
         })
         .catch((err)=>{
@@ -20,7 +20,7 @@ module.exports=(app)=>{
     });
 
     app.get('/validateUser',(req,res)=>{
-        GoogleLoginController.checkUserExist(req.query,false)
+        GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
             res.status(200);
             res.send({
@@ -40,7 +40,7 @@ module.exports=(app)=>{
  
     
     app.get('/getTransactionTypeList', (req, res) => {
-        GoogleLoginController.checkUserExist(req.query,false)
+        GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
             getList('transactionType',(json)=>{
                  res.send(json);
@@ -55,7 +55,7 @@ module.exports=(app)=>{
     });
 
     app.get('/getAmountTypeList', (req, res) => {
-        GoogleLoginController.checkUserExist(req.query,false)
+        GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
             getList('amountType',(json)=>{
                 res.send(json);

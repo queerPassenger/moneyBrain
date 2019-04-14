@@ -12,45 +12,50 @@ class GoogleLoginController{
      * @param {boolean} createFlag
      * @return {Promise}
      */
-    static checkUserExist(queryObj,createFlag){
+    static getUserIdFromLoginId(queryObj){
         return new Promise((resolve,reject)=>{   
-            // {userId:queryObj.id} For all req
-            // {loginId:queryObj.id} For Create req
-            let query;
-            if(createFlag){
-                query={loginId:queryObj.id};
-            }
-            else{
-                query={userId:queryObj.id};
-            }
-            console.log('query',query)
             dbConnect(dbDetailsToConnect, (dbClient) => {
-                dbClient.db(dbDetailsToConnect.db_name).collection('user').findOne(query,{projection:{userId:1,_id:0}},(err, result)=>{
+                let query= {loginId:queryObj.id};
+                dbClient.db(dbDetailsToConnect.db_name).collection('user').findOne(query,{projection:{userId:1}},(err, result)=>{
+                    if(err){
+                        reject(errorConstants.getUserIdFailed);
+                    }
+                    else{
+                        if(result===null){
+                            const createNewUserHandler=GoogleLoginController.createNewUser(queryObj); 
+                            createNewUserHandler
+                            .then((userId)=>{
+                                resolve(userId);
+                            })
+                            .catch((err)=>{
+                                reject(err)
+                            })
+                        }
+                        else{
+                            console.log(result);
+                            resolve(result.userId)
+                        }
+                    }
+                });
+            })
+        });
+
+    }
+    static checkUserIdExist(queryObj){
+        return new Promise((resolve,reject)=>{   
+            query={userId:queryObj.id};
+            dbConnect(dbDetailsToConnect, (dbClient) => {
+                dbClient.db(dbDetailsToConnect.db_name).collection('user').findOne(query,{projection:{userId:1}},(err, result)=>{
                    if(err){
                         reject(errorConstants.findUserFailedMsg);
                     }
                     else{
-                        console.log('result',result);   
-                        if(result===null){
-                            if(createFlag){
-                                const createNewUserHandler=GoogleLoginController.createNewUser(queryObj); 
-                                createNewUserHandler
-                                .then((status)=>{
-                                    resolve(status);
-                                })
-                                .catch((err)=>{
-                                    reject(err)
-                                })
-                            }
-                            else{
-                                reject(errorConstants.userNotFoundMsg)
-                            }
+                        if(result===null){                           
+                            reject(errorConstants.userIdNotFoundMsg);                            
                         }
                         else{
-                            if(createFlag)
-                                reject('User already exists')
-                            else
-                                resolve('User exist');
+                            console.log(result.userId);
+                            resolve('User exist');
                         }
                             
                     }

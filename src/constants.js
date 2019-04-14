@@ -4,7 +4,8 @@ const errorConstants={
     errorCodeMsg:'Error with error code ',
     createNewUserFailedMsg:'Error in creating new user',
     findUserFailedMsg:'Error in finding in the user',
-    userNotFoundMsg:'User does not exist',
+    userIdNotFoundMsg:'User does not exist',
     getListFailure:'Failure to get list',
+    getUserIdFailed:'Failed to get User Id @getUserIdFromLoginId'
 }
 module.exports={errorConstants}
