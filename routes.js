@@ -47,6 +47,7 @@ module.exports=(app)=>{
             });
         })
         .catch((err)=>{
+            console.log('error',err);
             res.send({
                 status:false,
                 msg:err

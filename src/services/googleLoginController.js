@@ -43,7 +43,7 @@ class GoogleLoginController{
     }
     static checkUserIdExist(queryObj){
         return new Promise((resolve,reject)=>{   
-            query={userId:queryObj.id};
+            let query={userId:queryObj.id};
             dbConnect(dbDetailsToConnect, (dbClient) => {
                 dbClient.db(dbDetailsToConnect.db_name).collection('user').findOne(query,{projection:{userId:1}},(err, result)=>{
                    if(err){

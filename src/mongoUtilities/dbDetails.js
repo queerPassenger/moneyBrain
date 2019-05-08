@@ -63,6 +63,7 @@ function skeletonSchema(db, collection) {
                         createdTimeStamp: 'dataType_date',
                         lastUpdatedTimeStamp: 'dataType_date',
                         transactionTypeId: 'dataType_ObjectId',
+                        timeStamp:'dataType_date',
                         comment: 'dataType_string',
                         amount: 'dataType_number',
                         amountTypeId: 'dataType_ObjectId',
