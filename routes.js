@@ -1,4 +1,6 @@
-const getList=require('./src/services/getList');
+const getList=require('./src/services/dbOps').getList;
+const createTransaction=require('./src/services/dbOps').createTransaction;
+const getTransaction=require('./src/services/dbOps').getTransaction;
 const GoogleLoginController=require('./src/services/googleLoginController');
 
 
@@ -70,6 +72,36 @@ module.exports=(app)=>{
         });
     });
 
+    app.post('/recordTransaction',(req,res)=>{
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            createTransaction('transaction',req.query,req.body,(json)=>{
+                res.send(json);
+            });
+        })
+        .catch((err)=>{
+            res.send({
+                status:false,
+                msg:err
+            })
+        });
+    })
+    app.post('/getTransaction',(req,res)=>{
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            console.log('req',req.query,req.body);
+            getTransaction('transaction',req.query,req.body,(json)=>{
+                console.log('JSON',json);
+                res.send(json);
+            });
+        })
+        .catch((err)=>{
+            res.send({
+                status:false,
+                msg:err
+            })
+        });
+    })
     
     
 // app.get('/', (req, res) => {

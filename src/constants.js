@@ -6,6 +6,8 @@ const errorConstants={
     findUserFailedMsg:'Error in finding in the user',
     userIdNotFoundMsg:'User does not exist',
     getListFailure:'Failure to get list',
-    getUserIdFailed:'Failed to get User Id @getUserIdFromLoginId'
+    getUserIdFailed:'Failed to get User Id @getUserIdFromLoginId',
+    updateTransactionFailure:'Failed to update transaction',
+    getTransaction:'Failed to get transaction'
 }
 module.exports={errorConstants}
