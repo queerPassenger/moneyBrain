@@ -10,10 +10,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 require('./routes')(app);
-
+let port =process.env.PORT || 3000 ;
 function enableAppToListen(){
-  app.listen(3000, () => {
-    console.log('Listening on localhost:3000')
+  app.listen(port, () => {
+    console.log('Listening on localhost:'+port);
   })
 }
 console.log('Running Pre Runner Task');
