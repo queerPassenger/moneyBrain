@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 require('./routes')(app);
 
 function enableAppToListen(){
-  app.listen(1000, () => {
-    console.log('Listening on localhost:1000')
+  app.listen(3000, () => {
+    console.log('Listening on localhost:3000')
   })
 }
 console.log('Running Pre Runner Task');
