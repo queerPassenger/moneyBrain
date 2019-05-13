@@ -32,7 +32,6 @@ class GoogleLoginController{
                             })
                         }
                         else{
-                            console.log(result);
                             resolve(result.userId)
                         }
                     }
@@ -54,7 +53,6 @@ class GoogleLoginController{
                             reject(errorConstants.userIdNotFoundMsg);                            
                         }
                         else{
-                            console.log(result.userId);
                             resolve('User exist');
                         }
                             

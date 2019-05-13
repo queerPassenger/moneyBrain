@@ -89,9 +89,7 @@ module.exports=(app)=>{
     app.post('/getTransaction',(req,res)=>{
         GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
-            console.log('req',req.query,req.body);
             getTransaction('transaction',req.query,req.body,(json)=>{
-                console.log('JSON',json);
                 res.send(json);
             });
         })

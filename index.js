@@ -14,7 +14,7 @@ require('./routes')(app);
 
 function enableAppToListen(){
   app.listen(getProperties('port'), () => {
-    console.log('Server started at '+getProperties('port'));
+    console.log('Server started at '+ getProperties('port'));
   })
 }
 DbTask.preRunnerInsert(true,false)

@@ -80,7 +80,16 @@ const getTransaction=(collectionName,queryObj,payload,cb)=>{
               return cb({
                   status:true,
                   msg:'',
-                  data:result
+                  data:result.map(data=>{return {
+                    amount:data.amount,
+                    amountTypeId:data.amountTypeId,
+                    comment:data.comment,
+                    createdTimeStamp:data.createdTimeStamp,
+                    lastUpdatedTimeStamp:data.lastUpdatedTimeStamp,
+                    timeStamp:data.timeStamp,
+                    transactionId:data.transactionId,
+                    transactionTypeId:data.transactionTypeId,
+                  }})
               })
             }
         })
