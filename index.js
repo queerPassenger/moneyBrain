@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {DbTask}=require('./src/services/dbTask');
+const getProperties=require('./properties').getProperties;
 
 // create the server
 const app = express();
@@ -10,13 +11,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 require('./routes')(app);
-let port =process.env.PORT || 3000 ;
+
 function enableAppToListen(){
-  app.listen(port, () => {
-    console.log('Listening on localhost:'+port);
+  app.listen(getProperties('port'), () => {
+    console.log('Server started at '+getProperties('port'));
   })
 }
-console.log('Running Pre Runner Task');
 DbTask.preRunnerInsert(true,false)
 .then(()=>{
   enableAppToListen();
