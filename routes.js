@@ -1,5 +1,4 @@
-const getList=require('./src/services/dbOps').getList;
-const createTransaction=require('./src/services/dbOps').createTransaction;
+const {createTransaction,getList,getUserInfo} =require('./src/services/dbOps')
 const getTransaction=require('./src/services/dbOps').getTransaction;
 const GoogleLoginController=require('./src/services/googleLoginController');
 
@@ -40,7 +39,21 @@ module.exports=(app)=>{
         });
     });
  
-    
+    app.get('/getUserInfo',(req,res)=>{
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            getUserInfo('user',req.query,(json)=>{
+                res.send(json);
+            })
+        })
+        .catch((err)=>{
+            res.status(401);
+            res.send({
+                status:false,
+                msg:'Unauthorized access'
+            })
+        });
+    })
     app.get('/getTransactionTypeList', (req, res) => {
         GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
@@ -99,7 +112,8 @@ module.exports=(app)=>{
                 msg:err
             })
         });
-    })
+    });
+
     
     
 // app.get('/', (req, res) => {

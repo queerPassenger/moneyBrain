@@ -6,6 +6,39 @@ const dbDetailsToConnect = getDbData(dbName);
 const { errorConstants } = require('../constants');
 const ObjectID = require('mongodb').ObjectID;
 
+const getUserInfo=(collectionName,queryObj,cb)=>{
+  try {
+    dbConnect(dbDetailsToConnect, (dbClient) => {
+        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).find({userId:queryObj.id}).toArray((err,result)=>{
+            if(err){
+                return cb({
+                    status:false,
+                    msg:errorConstants.getUserInfo
+                })
+            }
+            else{
+              console.log('result',result);
+              return cb({
+                  status:true,
+                  msg:'',
+                  data:result.map(data=>{return {
+                    name:data.userName,
+                    photo:data.userInfo.photo
+                  }})[0]
+              })
+            }
+        })            
+    });
+        
+  } catch (error) {
+    console.log(error);
+    return cb({
+      status:false,
+      msg:errorConstants.getUserInfo
+    })
+  }
+}
+
 const getList = (collectionName,cb) => {
     try {
       dbConnect(dbDetailsToConnect, (dbClient) => {
@@ -30,6 +63,10 @@ const getList = (collectionName,cb) => {
           
     } catch (error) {
       console.log(error);
+      return cb({
+        status:false,
+        msg:errorConstants.getListFailure
+      })
     }
 };
 const createTransaction=(collectionName,queryObj,payload,cb)=>{
@@ -63,6 +100,10 @@ const createTransaction=(collectionName,queryObj,payload,cb)=>{
   }
   catch (error) {
     console.log(error);
+    cb({
+      status:false,
+      msg:errorConstants.updateTransactionFailure
+    })
   }
 }
 const getTransaction=(collectionName,queryObj,payload,cb)=>{
@@ -98,10 +139,15 @@ const getTransaction=(collectionName,queryObj,payload,cb)=>{
         
   } catch (error) {
     console.log(error);
+    cb({
+      status:false,
+      msg:errorConstants.getTransaction
+  })
   }
 }
 module.exports={
   getList,
   createTransaction,
-  getTransaction
+  getTransaction,
+  getUserInfo
 }

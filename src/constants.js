@@ -8,6 +8,7 @@ const errorConstants={
     getListFailure:'Failure to get list',
     getUserIdFailed:'Failed to get User Id @getUserIdFromLoginId',
     updateTransactionFailure:'Failed to update transaction',
-    getTransaction:'Failed to get transaction'
+    getTransaction:'Failed to get transaction',
+    getUserInfo:'Failed to get Userinfo',
 }
 module.exports={errorConstants}
