@@ -17,7 +17,6 @@ const getUserInfo=(collectionName,queryObj,cb)=>{
                 })
             }
             else{
-              console.log('result',result);
               return cb({
                   status:true,
                   msg:'',
@@ -108,9 +107,8 @@ const createTransaction=(collectionName,queryObj,payload,cb)=>{
 }
 const getTransaction=(collectionName,queryObj,payload,cb)=>{
   try {
-
     dbConnect(dbDetailsToConnect, (dbClient) => {
-        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).find({$and:[{userId:queryObj.id},{'timeStamp':{$gte:new Date(payload.fromDate),$lte:new Date(payload.toDate)}}]}).toArray((err,result)=>{
+        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).find({$and:[{userId:queryObj.id},{'timeStamp':{$gte:new Date(payload.fromDate),$lte:new Date(payload.toDate)}}]}).sort({"timeStamp":1}).toArray((err,result)=>{
             if(err){
                 return cb({
                     status:false,
