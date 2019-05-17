@@ -1,4 +1,4 @@
-const {createTransaction,getList,getUserInfo} =require('./src/services/dbOps')
+const {createTransaction,updateTransaction,getList,getUserInfo} =require('./src/services/dbOps')
 const getTransaction=require('./src/services/dbOps').getTransaction;
 const GoogleLoginController=require('./src/services/googleLoginController');
 
@@ -89,6 +89,20 @@ module.exports=(app)=>{
         GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
             createTransaction('transaction',req.query,req.body,(json)=>{
+                res.send(json);
+            });
+        })
+        .catch((err)=>{
+            res.send({
+                status:false,
+                msg:err
+            })
+        });
+    });
+    app.post('/updateTransaction',(req,res)=>{
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            updateTransaction('transaction',req.query,req.body,(json)=>{
                 res.send(json);
             });
         })
