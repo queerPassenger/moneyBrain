@@ -1,4 +1,4 @@
-const {createTransaction,updateTransaction,getList,getUserInfo} =require('./src/services/dbOps')
+const {createTransaction,updateTransaction,deleteTransaction,getList,getUserInfo} =require('./src/services/dbOps')
 const getTransaction=require('./src/services/dbOps').getTransaction;
 const GoogleLoginController=require('./src/services/googleLoginController');
 
@@ -129,6 +129,21 @@ module.exports=(app)=>{
         });
     });
 
+    app.delete('/deleteTransaction',(req,res)=>{
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            deleteTransaction('transaction',req.query,req.body,(json)=>{
+                res.send(json);
+            });
+        })
+        .catch((err)=>{
+            console.log('err',err);
+            res.send({
+                status:false,
+                msg:err
+            })
+        });
+    })
     
     
 // app.get('/', (req, res) => {

@@ -186,7 +186,7 @@ const updateTransaction = (collectionName, queryObj, payload, cb) => {
             else{
               return cb({
                 status: true,
-                msg: 'Failed to update the following',
+                msg: errorConstants.updateTransactionFailure,
                 data: {failureList,successList}
             })
             }
@@ -203,10 +203,59 @@ const updateTransaction = (collectionName, queryObj, payload, cb) => {
     })
   }
 }
+
+const deleteTransaction= (collectionName, queryObj, payload, cb) => {
+  try {
+    dbConnect(dbDetailsToConnect, (dbClient) => {
+      deleteOne(0);
+      let failureList=[];
+      let successList=[];
+      function deleteOne(ind) {
+        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).deleteOne({$and:[{ userId: queryObj.id},{transactionId:payload[ind]['transactionId']}]},(err, result) => {
+          if (err) {
+            failureList.push(payload[ind]['transactionId']);
+          }
+          else{
+            successList.push(payload[ind]['transactionId'])
+          }
+          
+          if(ind<(payload.length-1)){
+            //Recursive
+            deleteOne(++ind);
+          }
+          else{
+            if(failureList.length===0){
+              return cb({
+                  status: true,
+                  msg: 'Delete Successfully',
+                  data: {successList,failureList}
+              })
+            }
+            else{
+              return cb({
+                status: true,
+                msg: errorConstants.deleteTransactionFailure,
+                data: {failureList,successList}
+            })
+            }
+          }
+        })
+      }
+    });
+  }
+  catch(err){
+    console.log(err);
+    cb({
+      status: false,
+      msg: errorConstants.deleteTransactionFailure
+    })
+  }
+}
 module.exports = {
   getList,
   createTransaction,
   getTransaction,
   getUserInfo,
-  updateTransaction
+  updateTransaction,
+  deleteTransaction
 }
