@@ -107,6 +107,7 @@ module.exports=(app)=>{
             });
         })
         .catch((err)=>{
+            console.log('err',err);
             res.send({
                 status:false,
                 msg:err

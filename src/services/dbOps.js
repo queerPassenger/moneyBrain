@@ -149,47 +149,59 @@ const getTransaction = (collectionName, queryObj, payload, cb) => {
 }
 
 const updateTransaction = (collectionName, queryObj, payload, cb) => {
-  dbConnect(dbDetailsToConnect, (dbClient) => {
-    updateOne(0);
-    let failedTypes=[];
-    function updateOne(ind) {
-      payload[ind]['lastUpdatedTimeStamp'] = new Date(data['createdTimeStamp']);
-      let obj = {
-        lastUpdatedTimeStamp: payload[ind]['lastUpdatedTimeStamp'],
-        transactionTypeId: payload[ind]['transactionTypeId'],
-        timeStamp: new Date(payload[ind]['timeStamp']),
-        comment: payload[ind]['comment'],
-        amount: payload[ind]['amount'],
-        amountTypeId: payload[ind]['amountTypeId']
-      };
-      dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).update({ userId: queryObj.id, transactionId: obj['transactioinId'] },obj, (err, result) => {
-        if (err) {
-          failedTypes.push(payload[ind]);
-        }
-        else {
-          if(ind<payload.length){
+  try {
+    dbConnect(dbDetailsToConnect, (dbClient) => {
+      updateOne(0);
+      let failureList=[];
+      let successList=[];
+      function updateOne(ind) {
+        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).updateOne({$and:[{ userId: queryObj.id},{transactionId:payload[ind]['transactionId']}]},
+        {$set:{
+          lastUpdatedTimeStamp:new Date(payload[ind]['lastUpdatedTimeStamp']),
+          transactionTypeId: payload[ind]['transactionTypeId'],
+          timeStamp: new Date(payload[ind]['timeStamp']),
+          comment: payload[ind]['comment'],
+          amount: payload[ind]['amount'],
+          amountTypeId: payload[ind]['amountTypeId']
+        }},{ upsert: false },(err, result) => {
+          if (err) {
+            failureList.push(payload[ind]['transactionId']);
+          }
+          else{
+            successList.push(payload[ind]['transactionId'])
+          }
+          
+          if(ind<(payload.length-1)){
+            //Recursive
             updateOne(++ind);
           }
           else{
-            if(failedTypes.length===0){
+            if(failureList.length===0){
               return cb({
                   status: true,
                   msg: 'Update Successfully',
-                  data: []
+                  data: {successList,failureList}
               })
             }
             else{
               return cb({
                 status: true,
                 msg: 'Failed to update the following',
-                data: failedTypes
+                data: {failureList,successList}
             })
             }
           }
-        }
-      })
-    }
-  });
+        })
+      }
+    });
+  }
+  catch(err){
+    console.log(err);
+    cb({
+      status: false,
+      msg: errorConstants.updateTransactionFailure
+    })
+  }
 }
 module.exports = {
   getList,
