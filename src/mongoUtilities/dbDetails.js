@@ -88,9 +88,10 @@ function skeletonSchema(db, collection) {
                 return {
                     collectionName: 'transactionType',
                     skeletonSchema: {
-                        transactionTypeId: 'dataType_number',
+                        transactionTypeId: 'dataType_ObjectId',
                         transactionTypeName: 'dataType_string',
                         transactionClassification:'dataType_string',
+                        userId: 'dataType_ObjectId',
                         misc: 'dataType_array'
                     }
                 };

@@ -1,3 +1,3 @@
 
 require('./amountType')();
-require('./transactionType')();
+//require('./transactionType')();
