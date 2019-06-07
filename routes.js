@@ -57,7 +57,7 @@ module.exports=(app)=>{
     app.get('/getTransactionTypeList', (req, res) => {
         GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
-            getList('transactionType',req.query,(json)=>{
+            getList('transactionType',null,(json)=>{
                  res.send(json);
             });
         })
