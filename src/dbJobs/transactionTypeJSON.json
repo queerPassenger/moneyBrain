@@ -1,102 +1,120 @@
 [
     {
         "transactionTypeId":1,
-        "transactionTypeName": "travel",    
+        "transactionTypeName": "Travel",    
         "transactionClassification":"expense",
         "misc": [{"from":""},{"to":""}]
     },
     {
         "transactionTypeId":2,
-        "transactionTypeName": "food",
+        "transactionTypeName": "Food",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":3,
-        "transactionTypeName": "accomodation",
+        "transactionTypeName": "Accomodation",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":4,
-        "transactionTypeName": "grocery",
+        "transactionTypeName": "Grocery",
         "transactionClassification":"expense",
         "misc":[{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":5,
-        "transactionTypeName": "charity",
+        "transactionTypeName": "Charity",
         "transactionClassification":"expense",
         "misc":[{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":6,
-        "transactionTypeName": "movie",
+        "transactionTypeName": "Movie",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":7,
-        "transactionTypeName": "book",
+        "transactionTypeName": "Book",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":8,
-        "transactionTypeName": "clothing",
+        "transactionTypeName": "Clothing",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
         "transactionTypeId":9,
-        "transactionTypeName": "repair",
+        "transactionTypeName": "Repair",
         "transactionClassification":"expense",
         "misc": [{"of":""},{"peopleInvolved":[]}]
     },  
     {
         "transactionTypeId":10,
-        "transactionTypeName": "lending",
+        "transactionTypeName": "Lending",
         "transactionClassification":"expense",
         "misc": [{"purpose":""},{"peopleInvolved":[]},{"remainder":""}]
     },
     {
         "transactionTypeId":11,
-        "transactionTypeName": "borrow",
+        "transactionTypeName": "Borrow",
         "transactionClassification":"expense",
         "misc": [{"purpose":""},{"peopleInvolved":[]},{"remainder":""}]
     },
     {
         "transactionTypeId":12,
-        "transactionTypeName": "BAnk R.D",
-        "transactionClassification":"saving",
-        "misc": [{"org":"","paymentTenure":""}]
-    },
-    {
-        "transactionTypeId":13,
-        "transactionTypeName": "BAnk F.D",
-        "transactionClassification":"saving",
-        "misc":[{"org":"","paymentTenure":""}]
-    },
-    {
-        "transactionTypeId":14,
-        "transactionTypeName": "Link",
-        "transactionClassification":"saving",
-        "misc":[{"org":"","paymentTenure":""}]
-    },
-    {
-        "transactionTypeId":15,
         "transactionTypeName": "Gift",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
-        "transactionTypeId":16,
+        "transactionTypeId":13,
+        "transactionTypeName": "Medicine",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":98,
         "transactionTypeName": "Others",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
-        "transactionTypeId":17,
+        "transactionTypeId":101,
+        "transactionTypeName": "BAnk R.D",
+        "transactionClassification":"saving",
+        "misc": [{"org":"","paymentTenure":""}]
+    },
+    {
+        "transactionTypeId":102,
+        "transactionTypeName": "BAnk F.D",
+        "transactionClassification":"saving",
+        "misc":[{"org":"","paymentTenure":""}]
+    },
+    {
+        "transactionTypeId":103,
+        "transactionTypeName": "Mutual Fund",
+        "transactionClassification":"saving",
+        "misc":[{"org":"","paymentTenure":""}]
+    },    
+    {
+        "transactionTypeId":104,
+        "transactionTypeName": "Stocks",
+        "transactionClassification":"saving",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    }, 
+    {
+        "transactionTypeId":105,
+        "transactionTypeName": "NSC",
+        "transactionClassification":"saving",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },   
+    {
+        "transactionTypeId":198,
         "transactionTypeName": "Others",
         "transactionClassification":"saving",
         "misc": [{"place":""},{"peopleInvolved":[]}]
