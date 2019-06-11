@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "node index.js",    
+    "devStart": "SET NODE_ENV=development&& node index",
     "dbjobsDev": "SET NODE_ENV=development&& node src/dbJobs",
-    "dbjobsProd": "node -r dotenv/config src/dbJobs",
-    "devStart": "SET NODE_ENV=development&& node index"
+    "dbjobsProd": "node -r dotenv/config src/dbJobs"
   },
   "repository": {
     "type": "git",
