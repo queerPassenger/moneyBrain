@@ -15,32 +15,20 @@ const dbCollectionSet=[
 ]
 function getDbData(key) {
     switch (key) {
-        case 'pouch':
-            if(process.env.NODE_ENV=='development'){
-                return {
-                    db_address: 'ds053894.mlab.com',
-                    port_no: 53894,
-                    db_name: 'pouch',
-                    username: 'dbUser',
-                    password: 'dbUser123',
-                }
-            }
-            else{
-                return {
-                    db_address:process.env.DB_ADDRESS,
-                    port_no: process.env.DB_PORT_NO,
-                    db_name:process.env.DB_NAME,
-                    username:process.env.DB_USERNAME,
-                    password:process.env.DB_PASSWORD,
-                }
-            }
-            
+        case 'pouch':            
+            return {
+                db_address:process.env.DB_ADDRESS,
+                port_no: process.env.DB_PORT_NO,
+                db_name:process.env.DB_NAME,
+                username:process.env.DB_USERNAME,
+                password:process.env.DB_PASSWORD,
+            };            
         case 'local':
             return {
                 db_address: 'localhost',
                 port_no: null,
                 db_name: '',
-            }
+            };
         default :
             return null
     }
