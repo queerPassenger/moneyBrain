@@ -1,4 +1,4 @@
-const {createTransaction,updateTransaction,deleteTransaction,getList,getUserInfo,createTransactionType,deleteTransactionType} =require('./src/services/dbOps')
+const {createTransaction,updateTransaction,deleteTransaction,getList,getUserInfo,createTransactionType,deleteTransactionType,saveAccountInfo} =require('./src/services/dbOps')
 const getTransaction=require('./src/services/dbOps').getTransaction;
 const GoogleLoginController=require('./src/services/googleLoginController');
 
@@ -172,7 +172,38 @@ module.exports=(app)=>{
                 msg:err
             })
         });
-    })
+    });
+    app.get('/getAccountInfo', (req, res) => {
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            getList('accountInfo',null,(json)=>{
+                 res.send(json);
+            });
+        })
+        .catch((err)=>{
+            console.log('error',err);
+            res.send({
+                status:false,
+                msg:err
+            })
+        });
+    });
+    app.post('/saveAccountInfo', (req, res) => {
+        GoogleLoginController.checkUserIdExist(req.query)
+        .then((msg)=>{
+            saveAccountInfo('accountInfo',req.query,req.body,(json)=>{
+                 res.send(json);
+            });
+        })
+        .catch((err)=>{
+            console.log('error',err);
+            res.send({
+                status:false,
+                msg:err
+            })
+        });
+    });
+    
 // app.get('/', (req, res) => {
 //   let profile={"id":"1096606541659894762190","displayName":"Allan Valooran","name":{"familyName":"Valooran","givenName":"Allan"},"photos":[{"value":"https://lh4.googleusercontent.com/-52C-SWPb9KQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdRt_itmyzSNGHHGY0SHNJxLdYzsQ/s50-mo/photo.jpg"}],"provider":"google","_raw":"{\n \"kind\": \"plus#person\",\n \"etag\": \"\\\"4DZKD8nJom0F9AKh7PGs_B0kK-A/rVrqj1CF9WOC66lJSJz5rVu2WiM\\\"\",\n \"id\": \"109660654165989476219\",\n \"displayName\": \"Allan Valooran\",\n \"name\": {\n  \"familyName\": \"Valooran\",\n  \"givenName\": \"Allan\"\n },\n \"image\": {\n  \"url\": \"https://lh4.googleusercontent.com/-52C-SWPb9KQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdRt_itmyzSNGHHGY0SHNJxLdYzsQ/s50-mo/photo.jpg\",\n  \"isDefault\": true\n },\n \"language\": \"en_GB\"\n}\n","_json":{"kind":"plus#person","etag":"\"4DZKD8nJom0F9AKh7PGs_B0kK-A/rVrqj1CF9WOC66lJSJz5rVu2WiM\"","id":"109660654165989476219","displayName":"Allan Valooran","name":{"familyName":"Valooran","givenName":"Allan"},"image":{"url":"https://lh4.googleusercontent.com/-52C-SWPb9KQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdRt_itmyzSNGHHGY0SHNJxLdYzsQ/s50-mo/photo.jpg","isDefault":true},"language":"en_GB"}};
 //   GoogleLoginController.checkUserExist(profile)

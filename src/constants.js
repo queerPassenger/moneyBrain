@@ -13,6 +13,7 @@ const errorConstants={
     getTransaction:'Failed to get transaction',
     getUserInfo:'Failed to get Userinfo',
     createTransactionTypeFailure:'Failed to create transaction type',
-    deleteTransactionTypeFailure:'Failed to delete transaction type'
+    deleteTransactionTypeFailure:'Failed to delete transaction type',
+    saveAccountInfoFailure:'Failed to update Account Information'
 }
 module.exports={errorConstants}

@@ -40,11 +40,11 @@ const getUserInfo = (collectionName, queryObj, cb) => {
   }
 }
 
-const getList = (collectionName,queryObj, cb) => {
+const getList = (collectionName, queryObj, cb) => {
   try {
-    let query={};
-    if(queryObj){
-      query={
+    let query = {};
+    if (queryObj) {
+      query = {
         userId: queryObj.id
       }
     }
@@ -76,17 +76,17 @@ const getList = (collectionName,queryObj, cb) => {
     })
   }
 };
-const createTransactionType = (collectionName,queryObj,payload,cb)=>{
-  try{
-    let transactionTypeObj={
+const createTransactionType = (collectionName, queryObj, payload, cb) => {
+  try {
+    let transactionTypeObj = {
       transactionTypeId: new ObjectID().toString(),
       transactionTypeName: payload['transactionTypeName'],
-      transactionClassification:payload['transactionClassification'],
-      userId:  queryObj.id,
+      transactionClassification: payload['transactionClassification'],
+      userId: queryObj.id,
       misc: []
     }
     dbConnect(dbDetailsToConnect, (dbClient) => {
-      dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).insertOne(transactionTypeObj,(err, result) => {
+      dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).insertOne(transactionTypeObj, (err, result) => {
         if (err) {
           return cb({
             status: false,
@@ -97,14 +97,14 @@ const createTransactionType = (collectionName,queryObj,payload,cb)=>{
           return cb({
             status: true,
             msg: 'Successfully Recorded',
-            data:{transactionTypeId:transactionTypeObj['transactionTypeObj']},
+            data: { transactionTypeId: transactionTypeObj['transactionTypeObj'] },
           })
         }
       })
 
     });
   }
-  catch(err){
+  catch (err) {
 
   }
 };
@@ -190,50 +190,52 @@ const updateTransaction = (collectionName, queryObj, payload, cb) => {
   try {
     dbConnect(dbDetailsToConnect, (dbClient) => {
       updateOne(0);
-      let failureList=[];
-      let successList=[];
+      let failureList = [];
+      let successList = [];
       function updateOne(ind) {
-        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).updateOne({$and:[{ userId: queryObj.id},{transactionId:payload[ind]['transactionId']}]},
-        {$set:{
-          lastUpdatedTimeStamp:new Date(payload[ind]['lastUpdatedTimeStamp']),
-          transactionTypeId: payload[ind]['transactionTypeId'],
-          timeStamp: new Date(payload[ind]['timeStamp']),
-          comment: payload[ind]['comment'],
-          amount: payload[ind]['amount'],
-          amountTypeId: payload[ind]['amountTypeId']
-        }},{ upsert: false },(err, result) => {
-          if (err) {
-            failureList.push(payload[ind]['transactionId']);
-          }
-          else{
-            successList.push(payload[ind]['transactionId'])
-          }
-          
-          if(ind<(payload.length-1)){
-            //Recursive
-            updateOne(++ind);
-          }
-          else{
-            if(failureList.length===0){
-              return cb({
+        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).updateOne({ $and: [{ userId: queryObj.id }, { transactionId: payload[ind]['transactionId'] }] },
+          {
+            $set: {
+              lastUpdatedTimeStamp: new Date(payload[ind]['lastUpdatedTimeStamp']),
+              transactionTypeId: payload[ind]['transactionTypeId'],
+              timeStamp: new Date(payload[ind]['timeStamp']),
+              comment: payload[ind]['comment'],
+              amount: payload[ind]['amount'],
+              amountTypeId: payload[ind]['amountTypeId']
+            }
+          }, { upsert: false }, (err, result) => {
+            if (err) {
+              failureList.push(payload[ind]['transactionId']);
+            }
+            else {
+              successList.push(payload[ind]['transactionId'])
+            }
+
+            if (ind < (payload.length - 1)) {
+              //Recursive
+              updateOne(++ind);
+            }
+            else {
+              if (failureList.length === 0) {
+                return cb({
                   status: true,
                   msg: 'Update Successfully',
-                  data: {successList,failureList}
-              })
+                  data: { successList, failureList }
+                })
+              }
+              else {
+                return cb({
+                  status: true,
+                  msg: errorConstants.updateTransactionFailure,
+                  data: { failureList, successList }
+                })
+              }
             }
-            else{
-              return cb({
-                status: true,
-                msg: errorConstants.updateTransactionFailure,
-                data: {failureList,successList}
-            })
-            }
-          }
-        })
+          })
       }
     });
   }
-  catch(err){
+  catch (err) {
     console.log(err);
     cb({
       status: false,
@@ -242,46 +244,46 @@ const updateTransaction = (collectionName, queryObj, payload, cb) => {
   }
 }
 
-const deleteTransaction= (collectionName, queryObj, payload, cb) => {
+const deleteTransaction = (collectionName, queryObj, payload, cb) => {
   try {
     dbConnect(dbDetailsToConnect, (dbClient) => {
       deleteOne(0);
-      let failureList=[];
-      let successList=[];
+      let failureList = [];
+      let successList = [];
       function deleteOne(ind) {
-        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).deleteOne({$and:[{ userId: queryObj.id},{transactionId:payload[ind]['transactionId']}]},(err, result) => {
+        dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).deleteOne({ $and: [{ userId: queryObj.id }, { transactionId: payload[ind]['transactionId'] }] }, (err, result) => {
           if (err) {
             failureList.push(payload[ind]['transactionId']);
           }
-          else{
+          else {
             successList.push(payload[ind]['transactionId'])
           }
-          
-          if(ind<(payload.length-1)){
+
+          if (ind < (payload.length - 1)) {
             //Recursive
             deleteOne(++ind);
           }
-          else{
-            if(failureList.length===0){
+          else {
+            if (failureList.length === 0) {
               return cb({
-                  status: true,
-                  msg: 'Delete Successfully',
-                  data: {successList,failureList}
+                status: true,
+                msg: 'Delete Successfully',
+                data: { successList, failureList }
               })
             }
-            else{
+            else {
               return cb({
                 status: true,
                 msg: errorConstants.deleteTransactionFailure,
-                data: {failureList,successList}
-            })
+                data: { failureList, successList }
+              })
             }
           }
         })
       }
     });
   }
-  catch(err){
+  catch (err) {
     console.log(err);
     cb({
       status: false,
@@ -289,30 +291,60 @@ const deleteTransaction= (collectionName, queryObj, payload, cb) => {
     })
   }
 }
-const deleteTransactionType= (collectionName, queryObj, payload, cb) => {
+const deleteTransactionType = (collectionName, queryObj, payload, cb) => {
   try {
     dbConnect(dbDetailsToConnect, (dbClient) => {
-      dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).deleteOne({$and:[{ userId: queryObj.id},{transactionTypeId:payload['transactionTypeId']}]},(err, result) => {
-            if (err) {
-              return cb({
-                status: true,
-                msg: errorConstants.deleteTransactionTypeFailure,
-              })
-            }
-            else{
-              return cb({
-                    status: true,
-                    msg: 'Delete Successfully'
-              });            
-            }
+      dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).deleteOne({ $and: [{ userId: queryObj.id }, { transactionTypeId: payload['transactionTypeId'] }] }, (err, result) => {
+        if (err) {
+          return cb({
+            status: true,
+            msg: errorConstants.deleteTransactionTypeFailure,
+          })
+        }
+        else {
+          return cb({
+            status: true,
+            msg: 'Delete Successfully'
+          });
+        }
       });
     });
   }
-  catch(err){
+  catch (err) {
     console.log(err);
-    cb({
+    return cb({
       status: false,
       msg: errorConstants.deleteTransactionTypeFailure
+    })
+  }
+}
+const saveAccountInfo = (collectionName, queryObj, payload, cb) => {
+  try {
+    dbConnect(dbDetailsToConnect, (dbClient) => {
+      dbClient.db(dbDetailsToConnect.db_name).collection(collectionName).replaceOne({ userId: queryObj.id },
+        {
+          userId: queryObj.id,
+          info: payload
+        }, { upsert: true }, (err) => {
+          if (err) {
+            return cb({
+              status: true,
+              msg: errorConstants.saveAccountInfoFailure,
+            })
+          }
+          else {
+            return cb({
+              status: true,
+              msg: 'Saved Successfully'
+            });
+          }
+        });
+    });
+  }
+  catch (err) {
+    return cb({
+      status: false,
+      msg: errorConstants.saveAccountInfoFailure
     })
   }
 }
@@ -324,5 +356,6 @@ module.exports = {
   updateTransaction,
   deleteTransaction,
   createTransactionType,
-  deleteTransactionType
+  deleteTransactionType,
+  saveAccountInfo
 }

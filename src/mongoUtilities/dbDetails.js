@@ -115,6 +115,15 @@ function skeletonSchema(db, collection) {
                         userId: 'dataType_ObjectId'
                     }
                 };
+            case 'accountInfo':
+                return {
+                    collectionName: 'accountInfo',
+                    skeletonSchema: {
+                        info:'dataType_array',
+                        misc: 'dataType_array',
+                        userId: 'dataType_ObjectId'
+                    }
+                };
             default:
                 return{
                     collectionName:'',
