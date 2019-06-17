@@ -177,7 +177,11 @@ module.exports=(app)=>{
         GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
             getList('accountInfo',null,(json)=>{
-                 res.send(json);
+                let _json={
+                    status:json.status,
+                    data:json.data[0].info
+                }
+                res.send(_json);
             });
         })
         .catch((err)=>{

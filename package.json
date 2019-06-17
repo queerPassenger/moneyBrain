@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index",    
+    "start": "node index",
     "devStart": "node -r dotenv/config index",
     "dbjobs": "node -r dotenv/config src/dbJobs"
   },

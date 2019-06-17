@@ -78,8 +78,38 @@
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
+        "transactionTypeId":14,
+        "transactionTypeName": "Vegetables",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":15,
+        "transactionTypeName": "Fruits",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":16,
+        "transactionTypeName": "Meat",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":17,
+        "transactionTypeName": "Fish",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":18,
+        "transactionTypeName": "Diary",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
         "transactionTypeId":98,
-        "transactionTypeName": "Others",
+        "transactionTypeName": "Other expenses",
         "transactionClassification":"expense",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
@@ -115,7 +145,7 @@
     },   
     {
         "transactionTypeId":198,
-        "transactionTypeName": "Others",
+        "transactionTypeName": "Other savings",
         "transactionClassification":"saving",
         "misc": [{"place":""},{"peopleInvolved":[]}]
     }
