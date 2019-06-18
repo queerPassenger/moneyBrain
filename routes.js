@@ -176,7 +176,7 @@ module.exports=(app)=>{
     app.get('/getAccountInfo', (req, res) => {
         GoogleLoginController.checkUserIdExist(req.query)
         .then((msg)=>{
-            getList('accountInfo',null,(json)=>{
+            getList('accountInfo',req.query,(json)=>{
                 let _json={
                     status:json.status,
                     data:json.data[0].info
