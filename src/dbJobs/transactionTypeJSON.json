@@ -108,6 +108,30 @@
         "misc": [{"place":""},{"peopleInvolved":[]}]
     },
     {
+        "transactionTypeId":19,
+        "transactionTypeName": "Internet/Phone Recharge",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":20,
+        "transactionTypeName": "Alcohol/Cigars",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":21,
+        "transactionTypeName": "LPG",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
+        "transactionTypeId":22,
+        "transactionTypeName": "Utensils",
+        "transactionClassification":"expense",
+        "misc": [{"place":""},{"peopleInvolved":[]}]
+    },
+    {
         "transactionTypeId":98,
         "transactionTypeName": "Other expenses",
         "transactionClassification":"expense",
